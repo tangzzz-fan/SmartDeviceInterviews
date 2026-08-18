@@ -1,28 +1,8 @@
 # 智能软硬件面试准备仓库
 
-本仓库为 Nirva Founding iOS Engineer 面试冲刺材料库。**日常准备只用 [综合版](./综合版/README.md)** —— 四套 AI 生成材料去粗取精后的单一作战版本，不要再多套并行消耗。
+本仓库为 Nirva Founding iOS Engineer 面试冲刺**知识库**。**日常准备只用 [综合版](./综合版/README.md)** —— 四套 AI 生成材料去粗取精后的单一作战版本，不要再多套并行消耗。
 
-## 学习进度网站
-
-React + Vite 前端 + FastAPI + SQLite 后端，用于刷题、清单、白板/STAR/英文、自评与模拟面评分。
-
-完整说明（启动、功能地图、**Markdown 同步约定**）：[docs/LEARNING_TRACKER.md](./docs/LEARNING_TRACKER.md)
-
-```bash
-# 后端
-cd backend && python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-
-# 导入综合版材料
-python -m app.import_content
-
-# 前端（另开终端）
-cd web && npm install && npm run dev
-```
-
-打开 http://127.0.0.1:5173 。改 Markdown 后再次运行 `python -m app.import_content` 即可同步（进度按稳定 ID 保留）。
-
+> **分支约定**：`main` 只保留 Markdown / 练习代码知识库；本地学习站（React + FastAPI）在分支 **`webapp`**。
 
 ## 目标岗位
 
@@ -56,6 +36,21 @@ Nirva（AI 可穿戴初创）Founding iOS Engineer —— iOS 架构 + BLE/Core 
 - [综合版/08_模拟面试脚本.md](./综合版/08_模拟面试脚本.md) —— 两轮全真脚本 + 评分维度 + 复盘模板
 - [综合版/09_执行清单.md](./综合版/09_执行清单.md) —— D1–D7 每日打勾 + 面试前 24h
 
+## 分栏材料（与综合版题号分栏，勿混 ID）
+
+| 专栏 | 内容 |
+| --- | --- |
+| [专栏_SmartGlass/](./专栏_SmartGlass/) | 商汤眼镜叙事、双链路口径、冲刺与自测 |
+| [专栏_AlgoLab/](./专栏_AlgoLab/) | AxiLab / 算法工程化面试 Prep + Lab 文档 |
+| [专栏_MIT/](./专栏_MIT/) | MIT 三问四线：Swift / Python / CoreML / Design Pattern |
+
+## 可运行练习（labs）
+
+| 路径 | 说明 |
+| --- | --- |
+| [labs/algo-engineering-lab/](./labs/algo-engineering-lab/) | 算法工程化验证（Python → golden → Swift parity） |
+| [labs/mit-*-migration/](./labs/) | MIT 各轨道代码题 |
+
 ## 四套源材料的评估与取舍
 
 | 来源 | 评估结论 | 在综合版中的角色 |
@@ -74,5 +69,16 @@ Nirva（AI 可穿戴初创）Founding iOS Engineer —— iOS 架构 + BLE/Core 
 3. **数字必须真实**：材料中标注「示范」的数字和【】占位是人设值，上场前全部替换为真实经历——面试官一定追问细节，编造会被识破。
 4. **缺口不硬装**：没做过的项目用 02 的诚实缺口话术（承认边界 + 相邻经验 + 补法），不要虚构。
 5. **D6–D7 录音模拟**：按 08 脚本跑全真模拟，平均分 < 4 的题回对应题库重练。
+
+## 学习进度网站（webapp 分支）
+
+刷题 / 清单 / 费曼·西蒙·口述 / 专栏浏览器等本地站在分支 **`webapp`**（含 `web/` + `backend/`）。
+
+```bash
+git checkout webapp
+# 详见该分支 docs/LEARNING_TRACKER.md
+```
+
+知识库改动请落在 `main`；需要站内导入时，在 `webapp` 上 `merge main` 后再跑 `python -m app.import_content`。
 
 > 维护约定：本 README 与 [综合版/README.md](./综合版/README.md) 保持同步，更新综合版结构时两处一起改。
