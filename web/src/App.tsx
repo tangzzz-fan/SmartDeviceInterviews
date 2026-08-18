@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { ChecklistPage } from './pages/ChecklistPage'
+import { ColumnsHubPage } from './pages/ColumnsHubPage'
 import { ColumnPage } from './pages/ColumnPage'
 import { EnglishPage } from './pages/EnglishPage'
 import { FeynmanPage } from './pages/FeynmanPage'
@@ -33,6 +34,7 @@ function App() {
           <Route path="/practice/feynman" element={<FeynmanPage />} />
           <Route path="/practice/simon" element={<SimonPage />} />
           <Route path="/practice/speak" element={<SpeakPage />} />
+          <Route path="/columns" element={<ColumnsHubPage />} />
           <Route path="/column/:columnKey" element={<ColumnPage />} />
           <Route path="/column/:columnKey/:docId" element={<ColumnPage />} />
         </Routes>

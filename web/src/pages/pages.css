@@ -269,19 +269,141 @@ textarea {
   align-items: start;
 }
 
+.column-layout.wide-nav {
+  grid-template-columns: minmax(260px, 300px) 1fr;
+}
+
+.column-nav {
+  max-height: calc(100vh - 8rem);
+  overflow: auto;
+  position: sticky;
+  top: 1rem;
+}
+
 .column-nav a {
   display: block;
-  padding: 0.45rem 0.55rem;
+  padding: 0.35rem 0.55rem;
   border-radius: 8px;
   text-decoration: none;
   color: #334155;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
+  line-height: 1.35;
 }
 
 .column-nav a:hover,
 .column-nav a.active-doc {
   background: #eff6ff;
   color: #1d4ed8;
+}
+
+.nav-section {
+  margin-bottom: 0.35rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.35rem;
+}
+
+.nav-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.4rem 0.25rem;
+  border: none;
+  background: transparent;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #0f172a;
+  cursor: pointer;
+  text-align: left;
+}
+
+.compact-list {
+  margin: 0;
+  padding: 0 0 0.25rem;
+  list-style: none;
+}
+
+.track-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 1rem;
+}
+
+.track-tabs button {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.track-tabs button.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: white;
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.hub-card h2 {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.hub-card h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hub-card h2 a:hover {
+  color: #2563eb;
+}
+
+.path-list {
+  margin: 0.5rem 0 0.75rem;
+  padding-left: 1.2rem;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.path-list.inline-path {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  list-style: none;
+  padding-left: 0;
+}
+
+.path-list.inline-path li {
+  background: #f1f5f9;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.primary-link {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.column-landing .hub-mini {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.75rem 0;
+}
+
+.landing-toc {
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
 }
 
 .column-nav button.linkish {
@@ -321,8 +443,14 @@ textarea {
 
 @media (max-width: 800px) {
   .compare-grid,
-  .column-layout {
+  .column-layout,
+  .column-layout.wide-nav {
     grid-template-columns: 1fr;
+  }
+
+  .column-nav {
+    max-height: none;
+    position: static;
   }
 }
 

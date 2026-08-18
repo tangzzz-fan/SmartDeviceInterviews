@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import './layout.css'
 
 const links = [
@@ -8,9 +8,7 @@ const links = [
   { to: '/practice/feynman', label: '费曼' },
   { to: '/practice/simon', label: '西蒙' },
   { to: '/practice/speak', label: '口述' },
-  { to: '/column/smartglass', label: 'Glass' },
-  { to: '/column/algolab', label: 'Algo' },
-  { to: '/column/mit', label: 'MIT' },
+  { to: '/columns', label: '专栏', columnNav: true },
   { to: '/checklist', label: '清单' },
   { to: '/whiteboards', label: '白板' },
   { to: '/stories', label: 'STAR' },
@@ -20,6 +18,10 @@ const links = [
 ]
 
 export function Layout({ children }: { children: ReactNode }) {
+  const loc = useLocation()
+  const onColumn =
+    loc.pathname === '/columns' || loc.pathname.startsWith('/column/')
+
   return (
     <div className="layout">
       <header className="topbar">
@@ -32,7 +34,14 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
         <nav>
           {links.map((link) => (
-            <NavLink key={link.to} to={link.to} end={link.end}>
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.end}
+              className={({ isActive }) =>
+                link.columnNav ? (onColumn ? 'active' : undefined) : isActive ? 'active' : undefined
+              }
+            >
               {link.label}
             </NavLink>
           ))}

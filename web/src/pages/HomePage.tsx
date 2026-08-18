@@ -69,6 +69,23 @@ export function HomePage() {
 
       <section className="card">
         <div className="card-head">
+          <h2>专栏（分栏材料）</h2>
+          <Link to="/columns">总览 →</Link>
+        </div>
+        <p className="muted">
+          Glass 眼镜叙事 · Algo 算法工程化 · MIT 四线攻坚。与综合版题库分栏，按分区阅读。
+        </p>
+        <p>
+          <Link to="/column/smartglass">Glass</Link>
+          {' · '}
+          <Link to="/column/algolab">Algo</Link>
+          {' · '}
+          <Link to="/column/mit">MIT</Link>
+        </p>
+      </section>
+
+      <section className="card">
+        <div className="card-head">
           <h2>模拟面试</h2>
           <Link to="/mocks">进入模拟面 →</Link>
         </div>
