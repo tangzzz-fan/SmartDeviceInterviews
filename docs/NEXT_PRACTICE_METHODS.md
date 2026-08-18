@@ -84,7 +84,7 @@ web：导航「专栏」→ 文档浏览器（只读 MD + Mermaid + 可选口述
 
 ## 5. 建议实现顺序（tickets）
 
-1. **T11** Mermaid + 统一 MarkdownView（题库/白板先受益）
+1. **T11** Mermaid + 统一 MarkdownView — **done**（`webapp`）
 2. **T12** 费曼区：盲答表单 + 对照 + 草稿 API
 3. **T13** 西蒙区：目标树种子 + 节点反馈
 4. **T14** 复制 SmartGlass 精选 MD → `专栏_SmartGlass/` + 专栏浏览器
