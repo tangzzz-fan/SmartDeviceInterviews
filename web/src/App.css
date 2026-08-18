@@ -1,0 +1,17 @@
+:root {
+  font-family: "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #0f172a;
+  background:
+    radial-gradient(circle at top left, #dbeafe 0%, transparent 40%),
+    radial-gradient(circle at top right, #e0e7ff 0%, transparent 35%),
+    #f8fafc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}

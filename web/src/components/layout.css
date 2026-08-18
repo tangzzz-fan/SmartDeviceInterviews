@@ -1,0 +1,73 @@
+.layout {
+  min-height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.65rem;
+  background: #2563eb;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.brand strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.brand p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.topbar nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: flex-end;
+}
+
+.topbar a {
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  color: #475569;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.topbar a.active {
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.content {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}

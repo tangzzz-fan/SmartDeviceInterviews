@@ -2,6 +2,28 @@
 
 本仓库为 Nirva Founding iOS Engineer 面试冲刺材料库。**日常准备只用 [综合版](./综合版/README.md)** —— 四套 AI 生成材料去粗取精后的单一作战版本，不要再多套并行消耗。
 
+## 学习进度网站
+
+React + Vite 前端 + FastAPI + SQLite 后端，用于刷题、清单、白板/STAR/英文、自评与模拟面评分。
+
+完整说明（启动、功能地图、**Markdown 同步约定**）：[docs/LEARNING_TRACKER.md](./docs/LEARNING_TRACKER.md)
+
+```bash
+# 后端
+cd backend && python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+
+# 导入综合版材料
+python -m app.import_content
+
+# 前端（另开终端）
+cd web && npm install && npm run dev
+```
+
+打开 http://127.0.0.1:5173 。改 Markdown 后再次运行 `python -m app.import_content` 即可同步（进度按稳定 ID 保留）。
+
+
 ## 目标岗位
 
 Nirva（AI 可穿戴初创）Founding iOS Engineer —— iOS 架构 + BLE/Core Bluetooth + 软硬件联调 + 0→1 交付 + AI-native + 英文协作。与深圳硬件/嵌入式团队、硅谷软件/产品团队协作，完成产品从研发、测试到交付。

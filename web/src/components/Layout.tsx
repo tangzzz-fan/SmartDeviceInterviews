@@ -1,0 +1,38 @@
+import type { ReactNode } from 'react'
+import { NavLink } from 'react-router-dom'
+import './layout.css'
+
+const links = [
+  { to: '/', label: '概览', end: true },
+  { to: '/questions', label: '题库' },
+  { to: '/checklist', label: '清单' },
+  { to: '/whiteboards', label: '白板' },
+  { to: '/stories', label: 'STAR' },
+  { to: '/english', label: '英文' },
+  { to: '/skills', label: '自评' },
+  { to: '/mocks', label: '模拟面' },
+]
+
+export function Layout({ children }: { children: ReactNode }) {
+  return (
+    <div className="layout">
+      <header className="topbar">
+        <div className="brand">
+          <span className="brand-mark">SDI</span>
+          <div>
+            <strong>面试冲刺学习站</strong>
+            <p>综合版 · 进度追踪</p>
+          </div>
+        </div>
+        <nav>
+          {links.map((link) => (
+            <NavLink key={link.to} to={link.to} end={link.end}>
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+      </header>
+      <main className="content">{children}</main>
+    </div>
+  )
+}
