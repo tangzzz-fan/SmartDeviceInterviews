@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import Markdown from 'react-markdown'
 import { api, type EnglishItem } from '../api'
+import { MarkdownView } from '../components/MarkdownView'
 import './pages.css'
 
 export function EnglishPage() {
@@ -53,7 +53,7 @@ export function EnglishPage() {
             {openId === e.id && (
               <>
                 <div className="answer-stack">
-                  <Markdown>{e.body_md}</Markdown>
+                  <MarkdownView markdown={e.body_md} />
                 </div>
                 <label className="field">
                   练习备注

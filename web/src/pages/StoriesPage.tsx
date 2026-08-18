@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import Markdown from 'react-markdown'
 import { api, type StarItem } from '../api'
+import { MarkdownView } from '../components/MarkdownView'
 import './pages.css'
 
 export function StoriesPage() {
@@ -63,7 +63,7 @@ export function StoriesPage() {
             </div>
             {openId === s.id && (
               <div className="answer-stack">
-                <Markdown>{s.body_md}</Markdown>
+                <MarkdownView markdown={s.body_md} />
               </div>
             )}
           </li>

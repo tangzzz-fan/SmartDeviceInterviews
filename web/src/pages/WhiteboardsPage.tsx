@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import Markdown from 'react-markdown'
 import { api, type WhiteboardItem } from '../api'
+import { MarkdownView } from '../components/MarkdownView'
 import './pages.css'
 
 export function WhiteboardsPage() {
@@ -62,7 +62,7 @@ export function WhiteboardsPage() {
             </div>
             {openId === w.id && (
               <div className="answer-stack">
-                <Markdown>{w.body_md}</Markdown>
+                <MarkdownView markdown={w.body_md} />
               </div>
             )}
           </li>

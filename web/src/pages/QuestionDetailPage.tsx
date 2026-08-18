@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import Markdown from 'react-markdown'
 import { Link, useParams } from 'react-router-dom'
 import { api, type QuestionDetail, type QuestionStatus } from '../api'
+import { MarkdownView } from '../components/MarkdownView'
 import './pages.css'
 
 export function QuestionDetailPage() {
@@ -78,18 +78,18 @@ export function QuestionDetailPage() {
           <div className="answer-stack">
             <article>
               <h3>答案</h3>
-              <Markdown>{q.answer_md}</Markdown>
+              <MarkdownView markdown={q.answer_md} />
             </article>
             {q.followups_md && (
               <article>
                 <h3>追问应对</h3>
-                <Markdown>{q.followups_md}</Markdown>
+                <MarkdownView markdown={q.followups_md} />
               </article>
             )}
             {q.tradeoffs_md && (
               <article>
                 <h3>取舍</h3>
-                <Markdown>{q.tradeoffs_md}</Markdown>
+                <MarkdownView markdown={q.tradeoffs_md} />
               </article>
             )}
           </div>
