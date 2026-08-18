@@ -65,6 +65,9 @@ export function QuestionDetailPage() {
         </p>
         <h1>{q.title}</h1>
         <p className="callout">案例中的数字为示范值，上场前请替换为真实经历。</p>
+        <p>
+          <Link to={`/practice/feynman?q=${q.id}`}>费曼盲答练习 →</Link>
+        </p>
       </header>
 
       <section className="card practice">

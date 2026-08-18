@@ -84,12 +84,12 @@ web：导航「专栏」→ 文档浏览器（只读 MD + Mermaid + 可选口述
 
 ## 5. 建议实现顺序（tickets）
 
-1. **T11** Mermaid + 统一 MarkdownView — **done**（`webapp`）
-2. **T12** 费曼区：盲答表单 + 对照 + 草稿 API
-3. **T13** 西蒙区：目标树种子 + 节点反馈
-4. **T14** 复制 SmartGlass 精选 MD → `专栏_SmartGlass/` + 专栏浏览器
-5. **T15** 把 Glass「关键口述」prompt 映射到 Nirva 题/白板（可选）
+1. **T11** Mermaid + 统一 MarkdownView — **done**
+2. **T12** 费曼区：盲答表单 + 对照 + 草稿 API — **done**
+3. **T13** 西蒙区：目标树种子 + 节点反馈 — **done**
+4. **T14** 复制 SmartGlass 精选 MD → `专栏_SmartGlass/` + 专栏浏览器 — **done**
+5. **T15** 把 Glass「关键口述」prompt 映射到 Nirva 题/白板（可选，未做）
 
 ## 6. 本轮已完成
 
-- 分支 `webapp` 已创建并提交学习站骨架（T01–T10）
+- 分支 `webapp`：学习站 T01–T14（含费曼 / 西蒙 / SmartGlass 专栏）

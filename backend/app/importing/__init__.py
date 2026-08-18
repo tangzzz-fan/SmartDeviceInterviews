@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import hashlib
-from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 
 from sqlmodel import Session, select
 
+from app.importing.columns import import_column_dir
 from app.importing.parse_extras import (
     parse_checklist,
     parse_english,
@@ -17,6 +17,7 @@ from app.importing.parse_extras import (
     parse_whiteboards,
 )
 from app.importing.parse_questions import parse_questions_markdown
+from app.importing.report import ImportReport
 from app.models import (
     ChecklistItem,
     ChecklistProgress,
@@ -33,31 +34,6 @@ from app.models import (
     Whiteboard,
     WhiteboardProgress,
 )
-
-
-@dataclass
-class ImportReport:
-    added: list[str] = field(default_factory=list)
-    updated: list[str] = field(default_factory=list)
-    unchanged: list[str] = field(default_factory=list)
-    skipped_files: list[str] = field(default_factory=list)
-    errors: list[str] = field(default_factory=list)
-
-    def as_dict(self) -> dict:
-        return {
-            "added": self.added,
-            "updated": self.updated,
-            "unchanged": self.unchanged,
-            "skipped_files": self.skipped_files,
-            "errors": self.errors,
-            "summary": {
-                "added": len(self.added),
-                "updated": len(self.updated),
-                "unchanged": len(self.unchanged),
-                "skipped_files": len(self.skipped_files),
-                "errors": len(self.errors),
-            },
-        }
 
 
 def file_hash(path: Path) -> str:
@@ -391,6 +367,15 @@ def import_paths(
 ) -> ImportReport:
     merged = ImportReport()
     for path in paths:
+        if path.is_dir() and path.name.startswith("专栏_"):
+            key = path.name.removeprefix("专栏_").lower()
+            if key == "smartglass":
+                key = "smartglass"
+            part = import_column_dir(
+                session, path, column_key=key, repo_root=repo_root, force=force
+            )
+            _merge(merged, part)
+            continue
         if path.is_dir():
             files = sorted(path.rglob("*.md")) if path.name != "03_题库与答案" else sorted(path.glob("*.md"))
             # For 综合版 root, import known files

@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.db import init_db
 from app import models  # noqa: F401 — register tables
-from app.routers import dashboard, health, mocks, questions, tracker
+from app.routers import columns, dashboard, health, mocks, practice, questions, tracker
 
 
 @asynccontextmanager
@@ -34,3 +34,5 @@ app.include_router(questions.router, prefix="/api")
 app.include_router(dashboard.router, prefix="/api")
 app.include_router(tracker.router, prefix="/api")
 app.include_router(mocks.router, prefix="/api")
+app.include_router(practice.router, prefix="/api")
+app.include_router(columns.router, prefix="/api")

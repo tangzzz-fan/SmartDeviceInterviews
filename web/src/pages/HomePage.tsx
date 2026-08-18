@@ -42,6 +42,33 @@ export function HomePage() {
 
       <section className="card">
         <div className="card-head">
+          <h2>练习法</h2>
+          <span>
+            <Link to="/practice/feynman">费曼</Link>
+            {' · '}
+            <Link to="/practice/simon">西蒙</Link>
+          </span>
+        </div>
+        {dash?.open_simon_nodes && dash.open_simon_nodes.length > 0 ? (
+          <ul className="weak-list">
+            {dash.open_simon_nodes.map((n) => (
+              <li key={n.id}>
+                <Link to="/practice/simon">
+                  <span className="qid">{n.status}</span>
+                  <span>
+                    {n.goal_title} · {n.title}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="muted">用费曼盲答打结构，用西蒙树打薄弱子技能。</p>
+        )}
+      </section>
+
+      <section className="card">
+        <div className="card-head">
           <h2>模拟面试</h2>
           <Link to="/mocks">进入模拟面 →</Link>
         </div>

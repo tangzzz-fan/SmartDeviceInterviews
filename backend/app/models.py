@@ -164,3 +164,72 @@ class MockSession(SQLModel, table=True):
     reflection: str = ""
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class FeynmanStatus(str, Enum):
+    drafting = "drafting"
+    submitted = "submitted"
+    compared = "compared"
+
+
+class FeynmanDraft(SQLModel, table=True):
+    """Blind five-layer answer draft for a question (Feynman / teach-back)."""
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    question_id: str = Field(index=True, foreign_key="question.id")
+    conclusion: str = ""
+    mechanism: str = ""
+    example: str = ""
+    tradeoff: str = ""
+    metric: str = ""
+    checklist_json: str = "{}"  # five-layer self-check bools
+    status: FeynmanStatus = Field(default=FeynmanStatus.drafting)
+    mark_recited: bool = False
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class SimonNodeStatus(str, Enum):
+    todo = "todo"
+    practicing = "practicing"
+    passed = "passed"
+    stuck = "stuck"
+
+
+class SimonGoal(SQLModel, table=True):
+    id: str = Field(primary_key=True)  # simon:ble-ready
+    title: str
+    description: str = ""
+    sort_order: int = 0
+
+
+class SimonNode(SQLModel, table=True):
+    id: str = Field(primary_key=True)  # simon:ble-ready:ready-def
+    goal_id: str = Field(index=True, foreign_key="simongoal.id")
+    title: str
+    description: str = ""
+    linked_question_ids: str = ""  # comma-separated A1,B2
+    linked_whiteboard_ids: str = ""
+    sort_order: int = 0
+
+
+class SimonNodeProgress(SQLModel, table=True):
+    node_id: str = Field(primary_key=True, foreign_key="simonnode.id")
+    status: SimonNodeStatus = Field(default=SimonNodeStatus.todo)
+    self_score: Optional[int] = Field(default=None, ge=1, le=5)
+    blocker_note: str = ""
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class ColumnDoc(SQLModel, table=True):
+    """Markdown docs under 专栏_* (e.g. SmartGlass), separate from question bank."""
+
+    id: str = Field(primary_key=True)  # glass:01_项目复盘
+    column_key: str = Field(index=True)  # smartglass
+    title: str
+    filename: str
+    body_md: str = ""
+    sort_order: int = 0
+    source_path: str = ""
+    orphaned: bool = False
+    updated_at: datetime = Field(default_factory=datetime.utcnow)

@@ -1,11 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { ChecklistPage } from './pages/ChecklistPage'
+import { ColumnPage } from './pages/ColumnPage'
 import { EnglishPage } from './pages/EnglishPage'
+import { FeynmanPage } from './pages/FeynmanPage'
 import { HomePage } from './pages/HomePage'
 import { MockDetailPage, MocksPage } from './pages/MocksPage'
 import { QuestionDetailPage } from './pages/QuestionDetailPage'
 import { QuestionsPage } from './pages/QuestionsPage'
+import { SimonPage } from './pages/SimonPage'
 import { SkillsPage } from './pages/SkillsPage'
 import { StoriesPage } from './pages/StoriesPage'
 import { WhiteboardsPage } from './pages/WhiteboardsPage'
@@ -26,6 +29,10 @@ function App() {
           <Route path="/skills" element={<SkillsPage />} />
           <Route path="/mocks" element={<MocksPage />} />
           <Route path="/mocks/:id" element={<MockDetailPage />} />
+          <Route path="/practice/feynman" element={<FeynmanPage />} />
+          <Route path="/practice/simon" element={<SimonPage />} />
+          <Route path="/column/smartglass" element={<ColumnPage />} />
+          <Route path="/column/smartglass/:docId" element={<ColumnPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>

@@ -2,8 +2,24 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session, select
 
 from app.db import get_session
-from app.models import MockSession, Question, QuestionProgress, QuestionStatus
-from app.schemas_dashboard import DashboardResponse, LatestMock, ModuleStat, WeakQuestion
+from app.models import (
+    MockSession,
+    Question,
+    QuestionProgress,
+    QuestionStatus,
+    SimonGoal,
+    SimonNode,
+    SimonNodeProgress,
+    SimonNodeStatus,
+)
+from app.schemas_dashboard import (
+    DashboardResponse,
+    LatestMock,
+    ModuleStat,
+    OpenSimonNode,
+    WeakQuestion,
+)
+from app.simon_seed import ensure_simon_seeded
 
 router = APIRouter(tags=["dashboard"])
 
@@ -94,6 +110,30 @@ def dashboard(session: Session = Depends(get_session)) -> DashboardResponse:
             passed=latest_row.passed,
         )
 
+    open_simon: list[OpenSimonNode] = []
+    try:
+        ensure_simon_seeded(session)
+        goals = {g.id: g for g in session.exec(select(SimonGoal)).all()}
+        nodes = session.exec(select(SimonNode)).all()
+        node_progress = {p.node_id: p for p in session.exec(select(SimonNodeProgress)).all()}
+        for n in sorted(nodes, key=lambda x: (x.goal_id, x.sort_order)):
+            p = node_progress.get(n.id)
+            status = p.status if p else SimonNodeStatus.todo
+            if status != SimonNodeStatus.passed:
+                goal = goals.get(n.goal_id)
+                open_simon.append(
+                    OpenSimonNode(
+                        id=n.id,
+                        goal_title=goal.title if goal else n.goal_id,
+                        title=n.title,
+                        status=status.value,
+                    )
+                )
+            if len(open_simon) >= 6:
+                break
+    except Exception:  # noqa: BLE001 — dashboard should still work pre-migration
+        open_simon = []
+
     return DashboardResponse(
         total=total,
         todo=todo,
@@ -102,4 +142,5 @@ def dashboard(session: Session = Depends(get_session)) -> DashboardResponse:
         modules=modules,
         weak_questions=weak[:10],
         latest_mock=latest_mock,
+        open_simon_nodes=open_simon,
     )

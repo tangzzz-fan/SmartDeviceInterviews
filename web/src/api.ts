@@ -57,6 +57,78 @@ export type DashboardResponse = {
     average: number | null
     passed: boolean
   } | null
+  open_simon_nodes?: Array<{
+    id: string
+    goal_title: string
+    title: string
+    status: string
+  }>
+}
+
+export type FeynmanChecklist = {
+  conclusion: boolean
+  mechanism: boolean
+  example: boolean
+  tradeoff: boolean
+  metric: boolean
+  followup: boolean
+}
+
+export type FeynmanDraft = {
+  id: number
+  question_id: string
+  question_title: string
+  conclusion: string
+  mechanism: string
+  example: string
+  tradeoff: string
+  metric: string
+  checklist: FeynmanChecklist
+  status: 'drafting' | 'submitted' | 'compared'
+  mark_recited: boolean
+  reference_answer_md: string | null
+  reference_followups_md: string | null
+  reference_tradeoffs_md: string | null
+  created_at: string
+  updated_at: string
+}
+
+export type SimonNodeStatus = 'todo' | 'practicing' | 'passed' | 'stuck'
+
+export type SimonNode = {
+  id: string
+  goal_id: string
+  title: string
+  description: string
+  linked_question_ids: string[]
+  linked_whiteboard_ids: string[]
+  sort_order: number
+  status: SimonNodeStatus
+  self_score: number | null
+  blocker_note: string
+}
+
+export type SimonGoal = {
+  id: string
+  title: string
+  description: string
+  sort_order: number
+  nodes: SimonNode[]
+  passed_count: number
+  total_count: number
+}
+
+export type ColumnDocListItem = {
+  id: string
+  column_key: string
+  title: string
+  filename: string
+  sort_order: number
+}
+
+export type ColumnDocDetail = ColumnDocListItem & {
+  body_md: string
+  source_path: string
 }
 
 export type MockScoreItem = {
@@ -253,4 +325,55 @@ export const api = {
       method: 'PATCH',
       body: JSON.stringify(body),
     }),
+
+  getFeynmanByQuestion: (questionId: string) =>
+    request<FeynmanDraft | null>(
+      `/api/practice/feynman/by-question/${encodeURIComponent(questionId)}`,
+    ),
+  saveFeynman: (body: {
+    question_id: string
+    conclusion?: string
+    mechanism?: string
+    example?: string
+    tradeoff?: string
+    metric?: string
+    checklist?: FeynmanChecklist
+  }) =>
+    request<FeynmanDraft>('/api/practice/feynman', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+  submitFeynman: (
+    id: number,
+    body: { mark_recited?: boolean; checklist?: FeynmanChecklist },
+  ) =>
+    request<FeynmanDraft>(`/api/practice/feynman/${id}/submit`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+  resetFeynman: (id: number) =>
+    request<FeynmanDraft>(`/api/practice/feynman/${id}/reset`, {
+      method: 'POST',
+    }),
+
+  listSimon: () => request<SimonGoal[]>('/api/practice/simon'),
+  patchSimonNode: (
+    id: string,
+    body: {
+      status?: SimonNodeStatus
+      self_score?: number
+      blocker_note?: string
+    },
+  ) =>
+    request<SimonNode>(`/api/practice/simon/nodes/${encodeURIComponent(id)}`, {
+      method: 'PATCH',
+      body: JSON.stringify(body),
+    }),
+
+  listColumn: (columnKey: string) =>
+    request<ColumnDocListItem[]>(`/api/columns/${encodeURIComponent(columnKey)}`),
+  getColumnDoc: (columnKey: string, docId: string) =>
+    request<ColumnDocDetail>(
+      `/api/columns/${encodeURIComponent(columnKey)}/docs/${encodeURIComponent(docId)}`,
+    ),
 }

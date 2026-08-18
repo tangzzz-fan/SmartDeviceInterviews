@@ -5,6 +5,9 @@ import './layout.css'
 const links = [
   { to: '/', label: '概览', end: true },
   { to: '/questions', label: '题库' },
+  { to: '/practice/feynman', label: '费曼' },
+  { to: '/practice/simon', label: '西蒙' },
+  { to: '/column/smartglass', label: '专栏' },
   { to: '/checklist', label: '清单' },
   { to: '/whiteboards', label: '白板' },
   { to: '/stories', label: 'STAR' },

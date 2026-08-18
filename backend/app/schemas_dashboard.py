@@ -28,6 +28,13 @@ class LatestMock(BaseModel):
     passed: bool
 
 
+class OpenSimonNode(BaseModel):
+    id: str
+    goal_title: str
+    title: str
+    status: str
+
+
 class DashboardResponse(BaseModel):
     total: int
     todo: int
@@ -36,3 +43,4 @@ class DashboardResponse(BaseModel):
     modules: list[ModuleStat]
     weak_questions: list[WeakQuestion]
     latest_mock: LatestMock | None = None
+    open_simon_nodes: list[OpenSimonNode] = []
