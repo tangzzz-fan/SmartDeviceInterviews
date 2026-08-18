@@ -1,9 +1,8 @@
 # T17 — MIT Migration 专栏
 
-**Status:** done（`mit-migration` 分支）
+**Status:** done（`mit-migration` 分支，已与上游四线同步）
 
-- [x] 从 `algo-lab` 创建 `mit-migration`
-- [x] `专栏_MIT/swift/` 迁入 T1–T4 + 计划文档
-- [x] `labs/mit-swift-migration/代码/`
-- [x] Python 占位说明；CoreML/Design Pattern 源目录不存在已记入 README
+- [x] `专栏_MIT/{swift,python,coreml,designpattern}/`
+- [x] `labs/mit-*-migration/代码/`
 - [x] `/column/mit` + 导航
+- [x] 上游更新后全量 resync（164 MD / 142 代码文件）

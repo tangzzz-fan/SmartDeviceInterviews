@@ -9,7 +9,7 @@ origin: chat
 
 # T1 教练出题集：Swift 语言核心
 
-> L2 仿真 · 教练 agent 产出。原料：`20_领域/01-iOS开发/Swift/` 五篇（值语义与引用语义工程深入、class与struct对照速览、进阶特性、any与some对照速览、类型擦除）。
+> L2 仿真 · 教练 agent 产出。原料：`20_领域/01-iOS开发/Swift/` 五篇（值语义与引用语义工程深入、class与struct对照速览、进阶特性、any与some对照速览、类型擦除）。注：原料笔记在外部库，本目录不可达；教练按库内既有知识重建模型骨架，考点与原料章节一一对应。
 > 学员人设：10 年 OC + UIKit，Swift 混编读过、写过简单页面；预期在 PAT、some/any、闭包捕获语义上暴露漏洞（见 [[01-学员人设卡.md]]）。
 > 使用纪律：学员卡住按「弱→中→强」逐级给提示，禁止跳级；直接要答案 → 拒答并反问已排除了什么（C1/C2）。
 
@@ -50,67 +50,31 @@ origin: chat
 
 问题：`struct ViewModel { var cache: NSMutableDictionary }`（或包一个 class 存储盒），`var b = a` 之后改 `b.cache`，`a` 会不会变？为什么？这违背了哪个模型、怎么修？
 
-- 弱提示：先分别说 struct 赋值拷贝了什么、class 赋值拷贝了什么。
-- 中提示：struct 拷贝时，里面那个 class 字段被拷的是实例还是引用？
-- 强提示：对照 M1——「关键字只是默认倾向」，值语义要靠什么机制才敢承诺（提示词首字母 C、三个字母）？
-- 评分要点：
-  - 死记硬背典型：「struct 是值类型所以一定独立拷贝。」（没意识到嵌套引用泄漏）
-  - 真懂特征：讲清「浅拷贝只拷引用字段本身」，给出 CoW 或去 class 化两条修法，并能说出 Substring 同构案例。
 
 ### C2 为什么带 associatedtype 的协议不能直接当类型用？
 
 问题：`protocol Animal { associatedtype Food; func eat(_ food: Food) }`，为什么 `let zoo: [Animal]` 编译不过？编译器到底在愁什么？说出至少两个层面的困难，以及现代 Swift（5.7+）给了哪两条出路。
 
-- 弱提示：想想 `Food` 在 Cat 和 Dog 那里分别是什么类型，数组元素的尺寸和方法签名还能统一吗？
-- 中提示：编译器要给数组元素安排内存、要给 `eat` 生成调用点——关联类型不确定时这两件事各卡在哪？
-- 强提示：查过的两条出路：一个把关联类型「钉死成参数」（primary associated types，`any Animal<String>`），一个用盒子转发（类型擦除）。
-- 评分要点：
-  - 死记硬背典型：「文档说 PAT 只能当泛型约束。」（只背结论不讲原因）
-  - 真懂特征：能讲出「尺寸未知 + 方法签名依赖关联类型」两层困难，并区分 some 为何也救不了异构数组。
 
 ### C3 some 与 any：同一个协议两种写法差在哪？
 
 问题：`func make() -> some Animal` 与 `func make() -> any Animal`，调用方拿到的东西有什么本质区别？为什么 SwiftUI 的 `body` 必须是 `some View` 而不是 `any View`？
 
-- 弱提示：对照 M4 的账本比喻——「编译器知道具体型」和「运行时箱子」分别在说什么。
-- 中提示：同一个函数两次调用，some 版本返回的类型可以不同吗？any 版本呢？谁在什么时刻知道真实类型？
-- 强提示：想 SwiftUI 的 diff——它需要稳定的类型身份来对齐视图树，装箱擦掉类型后身份会发生什么（提示词：AnyView 伤什么）？
-- 评分要点：
-  - 死记硬背典型：「some 是新的，any 是旧的。」或「some 性能好一点。」（讲不出类型身份与派发机制）
-  - 真懂特征：讲清「some 同位置类型恒定、可静态派发；any 装箱 + PWT 动态派发」，并把 body 的选择落到视图身份/diff 上。
 
 ### C4 Optional 的本质：Swift 为什么不允许「对 nil 发消息」？
 
 问题：OC 里 `[nil doSomething]` 静默返回零值，Swift 里 `nilValue.doSomething()` 直接编译不过。从「Optional 是枚举」出发，解释这个设计差异的因果链，并说出可选链 `a?.b?.c` 脱糖后大致是什么结构。
 
-- 弱提示：先说 `Int?` 到底是哪个类型的语法糖，它有几个 case。
-- 中提示：既然 nil 是 `.none` 这个 case 而不是「地址 0」，「给它发消息」在类型系统里意味着什么？
-- 强提示：可选链 = 逐层解包，任一层 `.none` 就短路返回 `.none`——试着用 switch/if-let 手写等价形式。
-- 评分要点：
-  - 死记硬背典型：「Swift 更安全所以禁止。」（没从枚举本质推导）
-  - 真懂特征：讲清「nil 不是地址而是枚举 case，消息调用没有接收者可谈」，能手写可选链的脱糖等价，并对比 OC nil-messaging 的利弊（安静吞错 vs 编译期暴露）。
 
 ### C5 @escaping 的本质与 OC block 的差异
 
 问题：什么情况下闭包必须标 `@escaping`？不标会发生什么？为什么逃逸闭包要特别警惕循环引用——和 OC block 的 `__weak typeof(self)` 惯例相比，Swift 少了哪层保护、多了哪层义务？
 
-- 弱提示：先说闭包捕获的变量存在哪，函数返回后栈帧还在不在。
-- 中提示：闭包被存进属性/传入异步 API 时，它的寿命和谁的寿命绑在一起？
-- 强提示：OC 里 ARC 对 block 的属性修饰默认是 copy，团队靠约定写 weakSelf；Swift 里编译器强制你声明「逃逸」这个事实，但捕获列表仍然要自己写——义务转移到了哪？
-- 评分要点：
-  - 死记硬背典型：「异步回调要加 @escaping。」（说不出寿命与堆捕获的因果）
-  - 真懂特征：讲清「逃逸 = 闭包活得比调用栈长 → 捕获物进堆 → 强捕获 self 成环」，并说出 Swift 把「是否逃逸」从约定变成类型契约的迁移意义。
 
 ### C6 mutating 与 let：值类型的「改」为什么需要特殊声明？
 
 问题：为什么 struct 的方法要改自身得标 `mutating`，而 class 不用？`let` 声明的 struct 为什么连 `mutating` 方法都不能调？从 M1 的拷贝语义推导。
 
-- 弱提示：mutating 方法里的 self 是什么参数语义（提示：in/out 两个词）？
-- 中提示：let 绑定的值在内存里承诺了什么？mutating 的写回动作和这个承诺冲突在哪？
-- 强提示：class 实例的 let 绑的是引用本身——改的是引用指向的内容而不是引用，所以不需要 mutating。struct 没有这一层间接。
-- 评分要点：
-  - 死记硬背典型：「语法规定 struct 要加 mutating。」
-  - 真懂特征：讲清「mutating = self 变 inout（copy-in copy-out），let 禁止写回」，并借此反推出 class/struct 在 let 下的行为差异根源。
 
 ## 四、代码任务题（4 道，代码通道，挂项目 1.2/1.4 载体）
 
@@ -121,29 +85,25 @@ origin: chat
 任务：写一个 struct 包 class 存储的最小例子，证明「赋值后两边齐变」的泄漏；然后给出修复。要求用 `print` 输出证明泄漏与修复两种行为。
 
 - 脚手架：`final class Storage { var value: Int }` + `struct Wrapper { var box: Storage }`。
-- 评分要点：泄漏版能复现「改 b 影响 a」；修复方案任选（CoW / 值化存储），但要能讲清为什么这样修。
 
 ### Q2 手写 CoW 容器（载体 1.2 本体）
 
 任务：实现一个 CoW 的 `MyArray<T>`：内部 class 存储盒 + `isKnownUniquelyReferenced` 判定的写路径。验证：两个变量共享时改一个不触发拷贝，写另一个才拷贝；用 `print` 或断言证明「赋值廉价、写时拷贝」。
 
 - 脚手架：存储盒 class 里放 `var storage: [T]`；写路径封装成 `mutating func append(_:)`。
-- 评分要点：`isKnownUniquelyReferenced` 用对位置（写前判定）；能解释为什么它只能用于 class；能说出 CoW 与线程安全无关（D3）。
 
 ### Q3 类型安全的迷你解析层（载体 1.4 前置）
 
 任务：定义 `protocol DecodablePayload { associatedtype Output }` 加两三个实现，写一个泛型函数做「输入 → 解码 → 校验 → 返回 Result」的管道；再分别用 `some` 与 `any` 写一个返回解析器的函数，观察编译器行为差异（允许保留一段编译不过的注释版本说明 PAT 的墙）。
 
-- 评分要点：泛型约束写对（`where` 子句）；some/any 两版的差异能用 C3 的结论解释；Result 的使用能讲清与 throws 的取舍。
 
 ### Q4 闭包捕获与循环引用对拍（载体：迁移基本功）
 
 任务：写一个 class 持有 `@escaping` 闭包的场景（如模拟异步回调存进属性），先构造出循环引用（deinit 不打印），再修复（捕获列表），两版运行输出对比证明修复生效。
 
-- 评分要点：泄漏版 deinit 缺席、修复版 deinit 出现，输出即证据；能讲清环的两条边（self→闭包属性→捕获的 self）；`weak` vs `unowned` 的适用差异讲得清。
 
 ## 五、验收规则
 
 - 概念通道：6 题全过（允许批改后复攻）；代码通道：4 题全跑通。
 - 任一通道未过 → 主题不记过关，缺口进台账（C3/C4）。
-- 出题文件不含答案全文，只有评分要点——防止学员拿题集当答案册。
+- 本文件是题干版：提示梯与评分要点已拆入 `T1-01-教练密卷-Swift语言核心.md`（仅教练分支/coach worktree，学员禁阅）。

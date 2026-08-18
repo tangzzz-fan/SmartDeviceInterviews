@@ -15,7 +15,7 @@ const META: Record<string, { title: string; lede: string }> = {
   },
   mit: {
     title: '专栏 · MIT Migration',
-    lede: 'MIT 三问法快速迁移材料（Swift T1–T4 已齐；Python 占位）。与题库分栏，勿混 ID。',
+    lede: 'MIT 三问四线：Swift / Python / CoreML / Design Pattern。与题库分栏，勿混 ID。',
   },
 }
 

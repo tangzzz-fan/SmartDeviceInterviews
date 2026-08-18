@@ -1,0 +1,4 @@
+# T6-Q4 依赖清单（安装命令见 README/作答稿）
+# uv pip install --python ../../../.venv/bin/python pytest pytest-asyncio
+pytest>=8.0
+pytest-asyncio>=0.24

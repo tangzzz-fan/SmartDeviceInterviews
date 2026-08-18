@@ -1,23 +1,21 @@
 # 专栏 · MIT Migration
 
-来源：父目录 [`MIT-Migration`](../../MIT-Migration)（MIT 三问法：出题 → 作答 → 批改 → 费曼）。
+来源：父目录 [`MIT-Migration`](../../MIT-Migration)（MIT 三问：出题 → 作答/密卷 → 批改 → 费曼）。已与上游四条线同步。
 
-## 轨道状态
+## 轨道
 
-| 轨道 | 本栏路径 | 状态 |
+| 轨道 | 本栏路径 | 代码 |
 | --- | --- | --- |
-| Swift / SwiftUI / Concurrency / Combine | `swift/` | **已迁入** T1–T4 四件套 + 学习计划 |
-| Python | `python/` | 源目录为空，仅占位说明 |
-| CoreML | — | **不在** `MIT-Migration` 源内；面试向 CoreML 见 `专栏_AlgoLab/lab-docs/09-CoreML入门/` |
-| Design Pattern | — | **不在** `MIT-Migration` 源内；未从外部书稿拷贝（避免混版权与 ID） |
+| Swift / SwiftUI / Concurrency / Combine | `swift/` | `labs/mit-swift-migration/代码/` |
+| Python / 数理 / LLM 实践 | `python/` | `labs/mit-python-migration/代码/` |
+| CoreML / Vision / 造模集成 | `coreml/` | `labs/mit-coreml-migration/代码/` |
+| Design Pattern | `designpattern/` | `labs/mit-designpattern-migration/代码/` |
 
-## 代码
-
-可运行练习在 `labs/mit-swift-migration/代码/`（T1–T4）。用本机 `swift` CLI 跑单个文件；详见各题顶部注释。
+总览另见 `00-内容地图.md`、`00_源仓库README.md`。
 
 ## 与本站关系
 
-- 独立栏目 ID：`mit:swift/...`，**不**与 Nirva `A1` 或 AlgoLab 混 ID。
+- 独立栏目 ID：`mit:swift/...` 等，**不**与 Nirva / AlgoLab 混 ID。
 - 浏览器：`/column/mit`
 
 ## 导入
