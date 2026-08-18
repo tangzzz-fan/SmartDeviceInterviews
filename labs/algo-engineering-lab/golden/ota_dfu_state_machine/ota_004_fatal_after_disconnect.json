@@ -1,0 +1,1 @@
+{"case":"ota_dfu_state_machine","category":"pathological","expected":{"final_state":"failed_fatal","funnel":{"activated":0,"started":1,"transfer_completed":0,"verified":0},"progress_chunks":1},"id":"ota_004_fatal_after_disconnect","input":{"events":["start","ack_received","disconnect","fatal_error"],"target_chunks":8}}

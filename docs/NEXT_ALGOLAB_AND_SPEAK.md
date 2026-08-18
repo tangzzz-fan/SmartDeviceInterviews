@@ -40,7 +40,7 @@ main
 
 ## 验收
 
-- [ ] `/practice/speak` 盲写后才显示参考；映射链到题/白板
-- [ ] `python -m app.import_content` 导入 `专栏_AlgoLab`
-- [ ] `/column/algolab` 可读 MD（含嵌套路径）
-- [ ] `npm run build` 通过
+- [x] `/practice/speak` 盲写后才显示参考；映射链到题/白板（T15，已在 `webapp`）
+- [x] `python -m app.import_content` 导入 `专栏_AlgoLab`（66 docs）
+- [x] `/column/algolab` 可读 MD（含嵌套路径）
+- [x] `npm run build` 通过

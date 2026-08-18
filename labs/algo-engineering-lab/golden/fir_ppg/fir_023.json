@@ -1,0 +1,1 @@
+{"case":"fir_ppg","category":"boundary","expected":{"error":null,"ok":true,"y":[0.0]},"id":"fir_023","input":{"non_finite_mode":null,"x":[0.0]},"meta":{"fs_hz":25.0,"generator":"python/fir_prototype.py","license_note":"synthetic internal","num_taps":51,"seed":42,"source":"synthetic"},"pathology":"none","snapshots":{}}

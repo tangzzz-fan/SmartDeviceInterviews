@@ -1,0 +1,1 @@
+{"case":"multi_channel_sync","category":"pathological","expected":{"aligned":{"acc":[],"ppg":[]},"mask":{"acc":[],"ppg":[]},"ok":true,"timeline":[]},"id":"mcs_033","input":{"channels":["ppg","acc"],"dt_ref":0.04,"packets":[],"zero_fill":true},"meta":{"generator":"python/multi_channel_sync_prototype.py","seed":42},"pathology":"empty"}

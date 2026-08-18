@@ -1,0 +1,1 @@
+{"case":"hrv_time_domain","category":"pathological","expected":{"error":"too_short","ok":false,"pnn50":null,"rmssd_ms":null,"sdnn_ms":null},"id":"hrv_td_027","input":{"non_finite_mode":null,"rr_ms":[800.0]},"meta":{"generator":"python/hrv_prototype.py","license_note":"synthetic internal","seed":42,"source":"synthetic"},"pathology":"single","snapshots":{}}

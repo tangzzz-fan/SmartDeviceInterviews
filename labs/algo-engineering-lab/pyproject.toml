@@ -1,0 +1,29 @@
+[project]
+name = "algo-engineering-lab"
+version = "0.1.0"
+description = "Validation lab: Python prototype → golden → C/Swift parity (not a production product)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.0.0",
+    "scipy>=1.14.0",
+]
+
+[project.optional-dependencies]
+hrv = [
+    "neurokit2>=0.2.10",
+]
+ml = [
+    "coremltools>=8.0",
+    "scikit-learn>=1.5.0,<1.6",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["python"]
+
+[tool.uv]
+package = true

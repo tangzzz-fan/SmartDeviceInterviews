@@ -1,0 +1,1 @@
+{"case":"hrv_time_domain","category":"boundary","expected":{"error":null,"ok":true,"pnn50":0.0,"rmssd_ms":50.0,"sdnn_ms":50.0},"id":"hrv_td_024","input":{"non_finite_mode":null,"rr_ms":[600.0,650.0,700.0]},"meta":{"generator":"python/hrv_prototype.py","license_note":"synthetic internal","seed":42,"source":"synthetic"},"pathology":"none","snapshots":{"mean_rr_ms":650.0}}

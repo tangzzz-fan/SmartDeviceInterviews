@@ -1,0 +1,1 @@
+{"case":"fir_ppg","category":"pathological","expected":{"error":"non_finite","ok":false,"y":null},"id":"fir_030","input":{"non_finite_mode":"nan_at_1","x":[0.0,0.0,0.1]},"meta":{"fs_hz":25.0,"generator":"python/fir_prototype.py","license_note":"synthetic internal","num_taps":51,"seed":42,"source":"synthetic"},"pathology":"non_finite","snapshots":{}}

@@ -88,8 +88,9 @@ web：导航「专栏」→ 文档浏览器（只读 MD + Mermaid + 可选口述
 2. **T12** 费曼区：盲答表单 + 对照 + 草稿 API — **done**
 3. **T13** 西蒙区：目标树种子 + 节点反馈 — **done**
 4. **T14** 复制 SmartGlass 精选 MD → `专栏_SmartGlass/` + 专栏浏览器 — **done**
-5. **T15** 把 Glass「关键口述」prompt 映射到 Nirva 题/白板（可选，未做）
+5. **T15** 把 Glass「关闭口述」prompt 映射到 Nirva 题/白板 — **done**（`/practice/speak`）
 
 ## 6. 本轮已完成
 
-- 分支 `webapp`：学习站 T01–T14（含费曼 / 西蒙 / SmartGlass 专栏）
+- 分支 `webapp`：学习站 T01–T15（含费曼 / 西蒙 / 关闭口述 / SmartGlass 专栏）
+- 分支 `algo-lab`：合并父目录 algo_lab → 见 `docs/NEXT_ALGOLAB_AND_SPEAK.md`

@@ -1,0 +1,1 @@
+{"case":"sleep_staging_postprocess","category":"pathological","expected":{"metrics":{"sleep_epochs":0,"sol_min":0.0,"total_epochs":0,"tst_min":0.0},"ok":true,"raw_stages":[],"smoothed_stages":[]},"id":"ssp_033","input":{"epoch_sec":30,"prob_seq":[]},"meta":{"generator":"python/sleep_staging_postprocess_prototype.py","seed":42},"pathology":"empty"}

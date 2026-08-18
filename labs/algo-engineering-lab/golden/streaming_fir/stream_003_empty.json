@@ -1,0 +1,1 @@
+{"case":"streaming_fir","category":"pathological","expected":{"ok":true,"y":[]},"id":"stream_003_empty","input":{"drop_seqs":[],"fs":25.0,"gap_policy":"zero_fill","packet_size":2,"packets":[],"window":25},"meta":{"generator":"python/generate_streaming_fir.py","seed":42},"pathology":"empty"}

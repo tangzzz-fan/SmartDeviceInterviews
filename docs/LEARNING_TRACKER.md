@@ -41,14 +41,18 @@ npm run dev
 | 英文 | 脚本练习勾选 + 文字备注 |
 | 自评 | 九维 + 加分项，D1/D7 双快照 |
 | 模拟面 | 按 R1/R2/电话筛模板打分，通过判定 |
+| 费曼 | 五层盲答 → 对照题库答案 |
+| 西蒙 | 目标树节点自评 |
+| 口述 | Glass 模式关闭口述，映射 Nirva 题/白板 |
+| Glass / Algo | 独立专栏浏览（`专栏_SmartGlass` / `专栏_AlgoLab`） |
 
 ## 内容同步（改 Markdown 之后）
 
-**原则**：`综合版/` 是 Source of Truth；数据库是内容缓存 + 你的进度。改材料后不会自动进站，需手动导入。
+**原则**：`综合版/` 是 Nirva 主线 Source of Truth；`专栏_*` 是分栏材料；数据库是内容缓存 + 你的进度。改材料后不会自动进站，需手动导入。
 
 ```bash
 cd backend && source .venv/bin/activate
-python -m app.import_content          # 默认同步整个 综合版/
+python -m app.import_content          # 默认同步 综合版/ + 所有 专栏_*/
 python -m app.import_content --force  # 忽略 hash，强制重解析
 python -m app.import_content --path ../综合版/03_题库与答案/02-ble与corebluetooth.md
 ```
@@ -58,6 +62,7 @@ python -m app.import_content --path ../综合版/03_题库与答案/02-ble与cor
 | 已有题目正文（同 ID，如 A1） | upsert 内容 | **保留** status/score/notes |
 | 同文件新增题目（新 ID） | insert 新题 | 旧进度不动 |
 | 新增 `.md` 文件 | 放入已知目录并符合标题格式后导入 | 新条目默认未开始 |
+| `专栏_*/**/*.md` | upsert `column_key:相对路径` | 与题库进度无关 |
 | 清单勾选项文案 | 按稳定 id `checklist:D3:2` 更新文案 | 尽量保留已勾 |
 | 删除 / 改 ID | 不自动删进度；内容可能 orphan | 进度仍在 |
 

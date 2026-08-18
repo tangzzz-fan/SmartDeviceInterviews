@@ -1,0 +1,1 @@
+{"case":"ota_dfu_state_machine","category":"pathological","expected":{"final_state":"idle","funnel":{"activated":0,"started":0,"transfer_completed":0,"verified":0},"progress_chunks":0},"id":"ota_005_never_started","input":{"events":["ack_received","verify_ok"],"target_chunks":8}}

@@ -1,0 +1,1 @@
+{"case":"hrv_freq_domain","category":"pathological","expected":{"error":"empty","hf":null,"lf":null,"lf_hf_ratio":null,"ok":false},"id":"hrv_fd_026","input":{"non_finite_mode":null,"rr_ms":[]},"meta":{"generator":"python/hrv_freq_prototype.py","license_note":"synthetic internal","seed":42,"source":"synthetic"},"pathology":"empty","snapshots":{}}

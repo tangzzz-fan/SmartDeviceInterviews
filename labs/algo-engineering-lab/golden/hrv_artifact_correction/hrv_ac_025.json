@@ -1,0 +1,1 @@
+{"case":"hrv_artifact_correction","category":"pathological","expected":{"error":"empty","ok":false,"pnn50":null,"rmssd_ms":null,"sdnn_ms":null},"id":"hrv_ac_025","input":{"non_finite_mode":null,"rr_ms":[]},"meta":{"generator":"python/hrv_artifact_prototype.py","license_note":"synthetic internal","seed":42,"source":"synthetic"},"pathology":"empty","snapshots":{}}
