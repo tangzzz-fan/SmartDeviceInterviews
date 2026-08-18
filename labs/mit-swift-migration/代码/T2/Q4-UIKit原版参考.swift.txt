@@ -1,0 +1,62 @@
+// T2-Q4 UIKit 原版参考（伪代码注释版，不参与编译）
+// 一个「设置页」：开关 + 计数 + 列表三元素，全命令式。
+// 这是改写前的靶子——注意里面每一处「拿引用改属性」与「target-action」，
+// 改写版要把它们逐一翻译成状态变更。
+
+/*
+@interface SettingsViewController ()
+@property (nonatomic, strong) UISwitch *darkSwitch;     // 开关
+@property (nonatomic, strong) UILabel *countLabel;      // 计数显示
+@property (nonatomic, strong) UITableView *listView;    // 列表
+@property (nonatomic, assign) BOOL darkMode;            // 状态散落在控制器里
+@property (nonatomic, assign) NSInteger visitCount;
+@property (nonatomic, strong) NSArray<NSString *> *items;
+@end
+
+@implementation SettingsViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.items = @[@"通知设置", @"隐私", @"关于"];
+    self.darkMode = NO;
+    self.visitCount = 0;
+
+    self.darkSwitch = [[UISwitch alloc] init];
+    // 命令式布线：控件 → target-action → 手动改属性 → 手动同步 UI
+    [self.darkSwitch addTarget:self
+                        action:@selector(darkSwitchChanged:)
+              forControlEvents:UIControlEventValueChanged];
+
+    self.countLabel = [[UILabel alloc] init];
+    self.countLabel.text = [NSString stringWithFormat:@"访问次数：%ld", (long)self.visitCount];
+
+    self.listView = [[UITableView alloc] init];
+    self.listView.dataSource = self;
+
+    // 三处状态、三处手动同步——漏一处就是 UI 与状态不一致的 bug
+    [self applyDarkMode];
+}
+
+- (void)darkSwitchChanged:(UISwitch *)sender {
+    self.darkMode = sender.isOn;          // 1) 从控件读回状态
+    [self applyDarkMode];                 // 2) 手动把状态刷到 UI
+}
+
+- (void)applyDarkMode {
+    self.view.backgroundColor = self.darkMode ? UIColor.blackColor : UIColor.whiteColor;
+}
+
+- (void)visitTapped {
+    self.visitCount += 1;
+    self.countLabel.text = [NSString stringWithFormat:@"访问次数：%ld", (long)self.visitCount]; // 手动同步 label
+}
+
+// dataSource 略：tableView:numberOfRowsInSection: 返回 self.items.count 等
+@end
+*/
+
+// 病根诊断（改写动机）：
+// ① 状态存三份（属性），UI 存一份（控件），靠人肉同步维系一致——这就是命令式的税。
+// ② 状态没有所有权概念：控制器什么都拿，谁都能改。
+// ③ 交互入口是 target-action 回调，逻辑埋在回调里，读代码要跳来跳去。
+// 翻译目标：状态唯一化（UI = f(state)），所有权按包装器声明，交互=改状态。

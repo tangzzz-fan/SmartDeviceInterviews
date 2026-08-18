@@ -13,6 +13,10 @@ const META: Record<string, { title: string; lede: string }> = {
     title: '专栏 · AlgoLab',
     lede: 'AxiLab / 算法工程化面试材料（来自父目录 algo_lab）。与 Nirva 题库分栏，勿混 ID。',
   },
+  mit: {
+    title: '专栏 · MIT Migration',
+    lede: 'MIT 三问法快速迁移材料（Swift T1–T4 已齐；Python 占位）。与题库分栏，勿混 ID。',
+  },
 }
 
 export function ColumnPage() {

@@ -44,7 +44,7 @@ npm run dev
 | 费曼 | 五层盲答 → 对照题库答案 |
 | 西蒙 | 目标树节点自评 |
 | 口述 | Glass 模式关闭口述，映射 Nirva 题/白板 |
-| Glass / Algo | 独立专栏浏览（`专栏_SmartGlass` / `专栏_AlgoLab`） |
+| Glass / Algo / MIT | 独立专栏（SmartGlass / AlgoLab / MIT Migration） |
 
 ## 内容同步（改 Markdown 之后）
 

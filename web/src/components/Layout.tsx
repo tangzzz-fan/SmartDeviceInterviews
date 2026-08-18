@@ -10,6 +10,7 @@ const links = [
   { to: '/practice/speak', label: '口述' },
   { to: '/column/smartglass', label: 'Glass' },
   { to: '/column/algolab', label: 'Algo' },
+  { to: '/column/mit', label: 'MIT' },
   { to: '/checklist', label: '清单' },
   { to: '/whiteboards', label: '白板' },
   { to: '/stories', label: 'STAR' },
