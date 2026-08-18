@@ -2,6 +2,8 @@
 
 本仓库为 Nirva Founding iOS Engineer 面试冲刺材料库。**日常准备只用 [综合版](./综合版/README.md)** —— 四套 AI 生成材料去粗取精后的单一作战版本，不要再多套并行消耗。
 
+> **当前分支：`webapp`** —— 含学习进度网站。纯知识库请用 **`main`**（见 [BRANCHES.md](./BRANCHES.md)）。
+
 ## 学习进度网站
 
 React + Vite 前端 + FastAPI + SQLite 后端，用于刷题、清单、白板/STAR/英文、自评与模拟面评分。
@@ -22,6 +24,13 @@ cd web && npm install && npm run dev
 ```
 
 打开 http://127.0.0.1:5173 。改 Markdown 后再次运行 `python -m app.import_content` 即可同步（进度按稳定 ID 保留）。
+
+从 `main` 同步最新知识库：
+
+```bash
+git checkout webapp
+git merge main
+```
 
 
 ## 目标岗位
