@@ -233,3 +233,29 @@ class ColumnDoc(SQLModel, table=True):
     source_path: str = ""
     orphaned: bool = False
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+
+class SpeakStatus(str, Enum):
+    drafting = "drafting"
+    revealed = "revealed"
+
+
+class SpeakPrompt(SQLModel, table=True):
+    """Closed-book speak prompt (Glass pattern) mapped to Nirva questions/whiteboards."""
+
+    id: str = Field(primary_key=True)  # speak:ble-90
+    title: str
+    ask: str
+    seconds: str = ""
+    glass_source_id: str = ""  # e.g. k-ble-90
+    linked_question_ids: str = ""
+    linked_whiteboard_ids: str = ""
+    reference: str = ""
+    sort_order: int = 0
+
+
+class SpeakDraft(SQLModel, table=True):
+    prompt_id: str = Field(primary_key=True, foreign_key="speakprompt.id")
+    draft_text: str = ""
+    status: SpeakStatus = Field(default=SpeakStatus.drafting)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)

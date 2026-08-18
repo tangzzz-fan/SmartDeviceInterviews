@@ -21,8 +21,12 @@ from app.models import (
     SimonNode,
     SimonNodeProgress,
     SimonNodeStatus,
+    SpeakDraft,
+    SpeakPrompt,
+    SpeakStatus,
 )
 from app.simon_seed import ensure_simon_seeded, seed_simon_trees
+from app.speak_seed import ensure_speak_seeded, seed_speak_prompts
 
 router = APIRouter(tags=["practice"])
 
@@ -358,3 +362,125 @@ def patch_simon_node(
 def reseed_simon(session: Session = Depends(get_session)) -> dict:
     n = seed_simon_trees(session)
     return {"nodes": n}
+
+
+# ---- Closed-book speak (Glass → Nirva map) ----
+
+
+class SpeakItemOut(BaseModel):
+    id: str
+    title: str
+    ask: str
+    seconds: str
+    glass_source_id: str
+    linked_question_ids: list[str]
+    linked_whiteboard_ids: list[str]
+    sort_order: int
+    draft_text: str
+    status: SpeakStatus
+    # Only after reveal
+    reference: Optional[str] = None
+    filled: bool = False
+
+
+class SpeakSave(BaseModel):
+    draft_text: str = ""
+
+
+def _speak_out(prompt: SpeakPrompt, draft: SpeakDraft | None) -> SpeakItemOut:
+    text = draft.draft_text if draft else ""
+    status = draft.status if draft else SpeakStatus.drafting
+    revealed = status == SpeakStatus.revealed
+    return SpeakItemOut(
+        id=prompt.id,
+        title=prompt.title,
+        ask=prompt.ask,
+        seconds=prompt.seconds,
+        glass_source_id=prompt.glass_source_id,
+        linked_question_ids=_split_ids(prompt.linked_question_ids),
+        linked_whiteboard_ids=_split_ids(prompt.linked_whiteboard_ids),
+        sort_order=prompt.sort_order,
+        draft_text=text,
+        status=status,
+        reference=prompt.reference if revealed else None,
+        filled=len(text.strip()) >= 8,
+    )
+
+
+@router.get("/practice/speak", response_model=list[SpeakItemOut])
+def list_speak(session: Session = Depends(get_session)) -> list[SpeakItemOut]:
+    ensure_speak_seeded(session)
+    prompts = session.exec(select(SpeakPrompt).order_by(SpeakPrompt.sort_order)).all()
+    drafts = {d.prompt_id: d for d in session.exec(select(SpeakDraft)).all()}
+    return [_speak_out(p, drafts.get(p.id)) for p in prompts]
+
+
+@router.get("/practice/speak/{prompt_id}", response_model=SpeakItemOut)
+def get_speak(prompt_id: str, session: Session = Depends(get_session)) -> SpeakItemOut:
+    ensure_speak_seeded(session)
+    prompt = session.get(SpeakPrompt, prompt_id)
+    if prompt is None:
+        raise HTTPException(404, "Speak prompt not found")
+    draft = session.get(SpeakDraft, prompt_id)
+    return _speak_out(prompt, draft)
+
+
+@router.put("/practice/speak/{prompt_id}", response_model=SpeakItemOut)
+def save_speak(
+    prompt_id: str,
+    body: SpeakSave,
+    session: Session = Depends(get_session),
+) -> SpeakItemOut:
+    ensure_speak_seeded(session)
+    prompt = session.get(SpeakPrompt, prompt_id)
+    if prompt is None:
+        raise HTTPException(404, "Speak prompt not found")
+    draft = session.get(SpeakDraft, prompt_id)
+    if draft is None:
+        draft = SpeakDraft(prompt_id=prompt_id)
+    draft.draft_text = body.draft_text
+    if draft.status != SpeakStatus.revealed:
+        draft.status = SpeakStatus.drafting
+    draft.updated_at = datetime.utcnow()
+    session.add(draft)
+    session.commit()
+    session.refresh(draft)
+    return _speak_out(prompt, draft)
+
+
+@router.post("/practice/speak/{prompt_id}/reveal", response_model=SpeakItemOut)
+def reveal_speak(prompt_id: str, session: Session = Depends(get_session)) -> SpeakItemOut:
+    ensure_speak_seeded(session)
+    prompt = session.get(SpeakPrompt, prompt_id)
+    if prompt is None:
+        raise HTTPException(404, "Speak prompt not found")
+    draft = session.get(SpeakDraft, prompt_id)
+    if draft is None:
+        draft = SpeakDraft(prompt_id=prompt_id)
+    if len(draft.draft_text.strip()) < 8:
+        raise HTTPException(400, "请先盲写至少几句再揭晓对照")
+    draft.status = SpeakStatus.revealed
+    draft.updated_at = datetime.utcnow()
+    session.add(draft)
+    session.commit()
+    session.refresh(draft)
+    return _speak_out(prompt, draft)
+
+
+@router.post("/practice/speak/{prompt_id}/reset", response_model=SpeakItemOut)
+def reset_speak(prompt_id: str, session: Session = Depends(get_session)) -> SpeakItemOut:
+    ensure_speak_seeded(session)
+    prompt = session.get(SpeakPrompt, prompt_id)
+    if prompt is None:
+        raise HTTPException(404, "Speak prompt not found")
+    draft = SpeakDraft(prompt_id=prompt_id, status=SpeakStatus.drafting, draft_text="")
+    session.merge(draft)
+    session.commit()
+    draft = session.get(SpeakDraft, prompt_id)
+    return _speak_out(prompt, draft)
+
+
+@router.post("/practice/speak/reseed")
+def reseed_speak(session: Session = Depends(get_session)) -> dict:
+    n = seed_speak_prompts(session)
+    return {"prompts": n}

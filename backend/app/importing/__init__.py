@@ -368,9 +368,8 @@ def import_paths(
     merged = ImportReport()
     for path in paths:
         if path.is_dir() and path.name.startswith("专栏_"):
-            key = path.name.removeprefix("专栏_").lower()
-            if key == "smartglass":
-                key = "smartglass"
+            raw = path.name.removeprefix("专栏_")
+            key = "smartglass" if raw.lower() == "smartglass" else raw.lower()
             part = import_column_dir(
                 session, path, column_key=key, repo_root=repo_root, force=force
             )

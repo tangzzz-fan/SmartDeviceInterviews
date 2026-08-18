@@ -118,6 +118,23 @@ export type SimonGoal = {
   total_count: number
 }
 
+export type SpeakStatus = 'drafting' | 'revealed'
+
+export type SpeakItem = {
+  id: string
+  title: string
+  ask: string
+  seconds: string
+  glass_source_id: string
+  linked_question_ids: string[]
+  linked_whiteboard_ids: string[]
+  sort_order: number
+  draft_text: string
+  status: SpeakStatus
+  reference: string | null
+  filled: boolean
+}
+
 export type ColumnDocListItem = {
   id: string
   column_key: string
@@ -368,6 +385,23 @@ export const api = {
     request<SimonNode>(`/api/practice/simon/nodes/${encodeURIComponent(id)}`, {
       method: 'PATCH',
       body: JSON.stringify(body),
+    }),
+
+  listSpeak: () => request<SpeakItem[]>('/api/practice/speak'),
+  getSpeak: (id: string) =>
+    request<SpeakItem>(`/api/practice/speak/${encodeURIComponent(id)}`),
+  saveSpeak: (id: string, draft_text: string) =>
+    request<SpeakItem>(`/api/practice/speak/${encodeURIComponent(id)}`, {
+      method: 'PUT',
+      body: JSON.stringify({ draft_text }),
+    }),
+  revealSpeak: (id: string) =>
+    request<SpeakItem>(`/api/practice/speak/${encodeURIComponent(id)}/reveal`, {
+      method: 'POST',
+    }),
+  resetSpeak: (id: string) =>
+    request<SpeakItem>(`/api/practice/speak/${encodeURIComponent(id)}/reset`, {
+      method: 'POST',
     }),
 
   listColumn: (columnKey: string) =>

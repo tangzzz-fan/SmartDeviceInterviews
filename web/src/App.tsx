@@ -9,6 +9,7 @@ import { MockDetailPage, MocksPage } from './pages/MocksPage'
 import { QuestionDetailPage } from './pages/QuestionDetailPage'
 import { QuestionsPage } from './pages/QuestionsPage'
 import { SimonPage } from './pages/SimonPage'
+import { SpeakPage } from './pages/SpeakPage'
 import { SkillsPage } from './pages/SkillsPage'
 import { StoriesPage } from './pages/StoriesPage'
 import { WhiteboardsPage } from './pages/WhiteboardsPage'
@@ -31,8 +32,9 @@ function App() {
           <Route path="/mocks/:id" element={<MockDetailPage />} />
           <Route path="/practice/feynman" element={<FeynmanPage />} />
           <Route path="/practice/simon" element={<SimonPage />} />
-          <Route path="/column/smartglass" element={<ColumnPage />} />
-          <Route path="/column/smartglass/:docId" element={<ColumnPage />} />
+          <Route path="/practice/speak" element={<SpeakPage />} />
+          <Route path="/column/:columnKey" element={<ColumnPage />} />
+          <Route path="/column/:columnKey/:docId" element={<ColumnPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>

@@ -1,4 +1,4 @@
-"""Import 专栏_* markdown docs (e.g. SmartGlass column)."""
+"""Import 专栏_* markdown docs (e.g. SmartGlass / AlgoLab columns)."""
 
 from __future__ import annotations
 
@@ -22,6 +22,12 @@ def parse_column_title(path: Path, text: str) -> str:
     return path.stem
 
 
+def _doc_stem(column_root: Path, file: Path) -> str:
+    """Relative path without .md, using / for nested docs."""
+    rel = file.relative_to(column_root)
+    return rel.with_suffix("").as_posix()
+
+
 def import_column_dir(
     session: Session,
     path: Path,
@@ -35,7 +41,7 @@ def import_column_dir(
         report.errors.append(f"not a directory: {path}")
         return report
 
-    files = sorted(path.glob("*.md"))
+    files = sorted(p for p in path.rglob("*.md") if p.is_file())
     if not files:
         report.errors.append(f"no markdown in {path}")
         return report
@@ -60,7 +66,8 @@ def import_column_dir(
 
         text = file.read_text(encoding="utf-8")
         title = parse_column_title(file, text)
-        doc_id = f"{column_key}:{file.stem}"
+        stem = _doc_stem(path, file)
+        doc_id = f"{column_key}:{stem}"
 
         existing = session.get(ColumnDoc, doc_id)
         fields = {

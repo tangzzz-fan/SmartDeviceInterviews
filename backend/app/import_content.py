@@ -48,9 +48,9 @@ def main(argv: list[str] | None = None) -> int:
     paths = args.paths
     if not paths:
         paths = [repo_root / "综合版"]
-        glass = repo_root / "专栏_SmartGlass"
-        if glass.is_dir():
-            paths.append(glass)
+        for col in sorted(repo_root.glob("专栏_*")):
+            if col.is_dir():
+                paths.append(col)
 
     init_db()
     with Session(engine) as session:
