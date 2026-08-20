@@ -1,0 +1,62 @@
+.speech-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.speech-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.speech-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.speech-mic {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.speech-mic:hover:not(:disabled) {
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+
+.speech-mic.listening {
+  border-color: #dc2626;
+  background: #fef2f2;
+  color: #b91c1c;
+  animation: speech-pulse 1.2s ease-in-out infinite;
+}
+
+.speech-mic:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.speech-hint {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.speech-hint.listening-hint {
+  color: #b91c1c;
+}
+
+@keyframes speech-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(220 38 38 / 0%);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgb(220 38 38 / 18%);
+  }
+}

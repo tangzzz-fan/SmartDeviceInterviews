@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { api, type SpeakItem } from '../api'
+import { SpeechTextarea } from '../components/SpeechTextarea'
 import './pages.css'
 
 export function SpeakPage() {
@@ -144,17 +145,17 @@ export function SpeakPage() {
               </p>
 
               <label className="field">
-                <span>盲写区（提交前不显示参考）</span>
-                <textarea
+                <span>盲写区（提交前不显示参考 · 可语音输入）</span>
+                <SpeechTextarea
                   rows={10}
                   value={localText[selected.id] ?? ''}
-                  onChange={(e) =>
+                  onChange={(next) =>
                     setLocalText((prev) => ({
                       ...prev,
-                      [selected.id]: e.target.value,
+                      [selected.id]: next,
                     }))
                   }
-                  placeholder="不看稿，先写出口述骨架…"
+                  placeholder="不看稿，先说/写出口述骨架…"
                 />
               </label>
 

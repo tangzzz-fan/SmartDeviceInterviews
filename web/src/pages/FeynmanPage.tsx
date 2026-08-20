@@ -7,6 +7,7 @@ import {
   type QuestionListItem,
 } from '../api'
 import { MarkdownView } from '../components/MarkdownView'
+import { SpeechTextarea } from '../components/SpeechTextarea'
 import './pages.css'
 
 const emptyChecklist = (): FeynmanChecklist => ({
@@ -193,11 +194,12 @@ export function FeynmanPage() {
             ).map(([key, label]) => (
               <label key={key} className="field">
                 {label}
-                <textarea
+                <SpeechTextarea
                   rows={key === 'conclusion' ? 2 : 3}
                   disabled={revealed}
                   value={form[key]}
-                  onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
+                  onChange={(next) => setForm((f) => ({ ...f, [key]: next }))}
+                  placeholder="可打字或点麦克风口述…"
                 />
               </label>
             ))}
